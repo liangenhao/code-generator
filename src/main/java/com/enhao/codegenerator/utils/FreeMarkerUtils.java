@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -30,7 +31,7 @@ public class FreeMarkerUtils {
         try {
             config.setDirectoryForTemplateLoading(new File(classPath + "/templates/"));
         } catch (IOException e) {
-            log.error("freeMarker初始化失败", e);
+            throw new RuntimeException("freeMarker初始化失败", e);
         }
         // 设置字符集
         config.setDefaultEncoding(Constants.Encoding.UTF_8);
@@ -38,8 +39,9 @@ public class FreeMarkerUtils {
 
     /**
      * 处理模版转成字符串
-     * @param templateName 模板
-     * @param dateModel 数据
+     *
+     * @param templateName 模板名
+     * @param dateModel    数据
      * @return
      */
     public static String processTemplateIntoString(String templateName, Object dateModel) {
@@ -55,4 +57,39 @@ public class FreeMarkerUtils {
 
         return templateContent;
     }
+
+    /**
+     * 处理模版转成文件
+     *
+     * @param templateName 模板名
+     * @param dateModel    数据
+     * @param filePath     文件路径
+     * @return
+     */
+    public static File processTemplateInfoFile(String templateName, Object dateModel, String dirPath, String filePath) {
+        File dirPathFile = new File(dirPath);
+        if (!dirPathFile.exists()) {
+            dirPathFile.mkdirs();
+        }
+        FileWriter out = null;
+        File file = new File(filePath);
+        try {
+            out = new FileWriter(file);
+            Template template = config.getTemplate(templateName);
+            template.process(dateModel, out);
+        } catch (IOException | TemplateException e) {
+            throw new RuntimeException("处理模版失败", e);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                log.error("关闭FileWriter失败", e);
+            }
+        }
+
+        return file;
+    }
+
 }

@@ -1,16 +1,15 @@
 package com.enhao.codegenerator.model;
 
-import lombok.Data;
-
-import java.util.List;
+import lombok.*;
 
 /**
  * 方法元数据
  *
  * @author enhao
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class MethodMetaData {
+public class MethodMetaData extends BasicMetaData {
 
     /**
      * 方法名
@@ -34,6 +33,7 @@ public class MethodMetaData {
 
     /**
      * 是否分页
+     * 表示该接口方法是否分页
      */
     private boolean paginate;
 

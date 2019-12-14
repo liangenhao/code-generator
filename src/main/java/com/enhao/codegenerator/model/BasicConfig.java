@@ -21,6 +21,11 @@ public class BasicConfig {
     private String packageNamePrefix;
 
     /**
+     * 工程前缀
+     */
+    private String projectPrefix;
+
+    /**
      * 接口描述
      */
     private String interfaceDesc;
@@ -39,4 +44,9 @@ public class BasicConfig {
      * 创建时间 YYYY/MM/dd HH:mm
      */
     private String createTime;
+
+    /**
+     * 文件保存路径前缀
+     */
+    private String filePathPrefix;
 }

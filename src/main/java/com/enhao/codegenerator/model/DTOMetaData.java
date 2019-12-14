@@ -2,15 +2,13 @@ package com.enhao.codegenerator.model;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * DTO对象元数据
  *
  * @author enhao
  */
 @Data
-public class DTOMetaData {
+public class DTOMetaData extends BasicMetaData {
 
     /**
      * 包名
@@ -23,7 +21,8 @@ public class DTOMetaData {
     private String className;
 
     /**
-     * 字段
+     * 是否分页
      */
-    // private List<FieldMetaData> fieldList;
+    private boolean paginate;
+
 }

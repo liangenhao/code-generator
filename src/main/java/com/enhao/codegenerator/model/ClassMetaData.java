@@ -11,7 +11,7 @@ import java.util.List;
  * @author enhao
  */
 @Data
-public class ClassMetaData {
+public class ClassMetaData extends BasicMetaData {
 
     /**
      * 包名
@@ -26,5 +26,5 @@ public class ClassMetaData {
     /**
      * 方法
      */
-    private List<MethodMetaData> methodMetaDatas;
+    private List<MethodMetaData> methodMetaDataList;
 }

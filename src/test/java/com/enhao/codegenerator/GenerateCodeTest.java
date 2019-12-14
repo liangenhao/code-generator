@@ -65,7 +65,7 @@ public class GenerateCodeTest {
 
         methodMetaDatas.add(methodMetaData1);
         methodMetaDatas.add(methodMetaData2);
-        classMetaData.setMethodMetaDatas(methodMetaDatas);
+        classMetaData.setMethodMetaDataList(methodMetaDatas);
 
 
         return new HashMap<String, Object>() {{

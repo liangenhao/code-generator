@@ -8,7 +8,7 @@ import lombok.Data;
  * @author enhao
  */
 @Data
-public class FieldMetaData {
+public class FieldMetaData extends BasicMetaData {
 
     /**
      * 字段类型
