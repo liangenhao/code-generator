@@ -88,6 +88,7 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         Cell methodNameCell = row.getCell(0);
         Cell methodDescCell = row.getCell(1);
         Cell paginateCell = row.getCell(2);
+        Cell needReturnDataCell = row.getCell(3);
 
         // 方法名
         String methodName = methodNameCell.getStringCellValue();
@@ -95,10 +96,22 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         String methodDesc = methodDescCell.getStringCellValue();
         // 是否分页
         boolean paginate = paginateCell.getBooleanCellValue();
+        // 是否需要返回数据
+        boolean needReturnData = needReturnDataCell.getBooleanCellValue();
         // 方法入参
         DTOMetaData methodParam = getReqOrRespDTOMetaData(methodName, paginate, basicConfig, Constants.ClassConfig.REQ_SUFFIX);
         // 方法返回值
-        DTOMetaData methodReturn = getReqOrRespDTOMetaData(methodName, paginate, basicConfig, Constants.ClassConfig.RESP_SUFFIX);
+        DTOMetaData methodReturn;
+        if (paginate) {
+            // 需要分页，返回 PageResponse
+            methodReturn = getPageResponse(basicConfig);
+        } else if (!needReturnData) {
+            // 不需要分页，不需要返回数据，返回 BaseResponse
+            methodReturn = getBaseResponse(basicConfig);
+        } else {
+            // 不需要分页，需要返回数据，返回 XxxResp
+            methodReturn = getReqOrRespDTOMetaData(methodName, false, basicConfig, Constants.ClassConfig.RESP_SUFFIX);
+        }
 
         MethodMetaData methodMetaData = new MethodMetaData();
         methodMetaData.setMethodName(methodName);
@@ -108,6 +121,25 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         methodMetaData.setMethodReturn(methodReturn);
 
         return methodMetaData;
+    }
+
+    private DTOMetaData getBaseResponse(BasicConfig basicConfig) {
+        return getDefaultDTOMetaData(basicConfig, Constants.ClassConfig.BASE_RESPONSE);
+    }
+
+    private DTOMetaData getPageResponse(BasicConfig basicConfig) {
+        return getDefaultDTOMetaData(basicConfig, Constants.ClassConfig.PAGE_RESPONSE);
+    }
+
+    private DTOMetaData getDefaultDTOMetaData(BasicConfig basicConfig, Constants.ClassConfig classConfig) {
+        String packageName = getPackageName(basicConfig, classConfig);
+
+        DTOMetaData dtoMetaData = new DTOMetaData();
+        dtoMetaData.setPackageName(packageName);
+        dtoMetaData.setClassName(classConfig.classSuffix);
+        dtoMetaData.setPaginate(true);
+
+        return dtoMetaData;
     }
 
     /**

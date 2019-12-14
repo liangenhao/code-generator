@@ -37,4 +37,9 @@ public class MethodMetaData extends BasicMetaData {
      */
     private boolean paginate;
 
+    /**
+     * 是否需要返回数据
+     */
+    private boolean needReturnData;
+
 }

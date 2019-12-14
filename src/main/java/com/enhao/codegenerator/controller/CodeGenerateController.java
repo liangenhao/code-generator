@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -37,6 +36,7 @@ public class CodeGenerateController {
         // 解析excel，获取接口方法元数据
         List<MethodMetaData> methodMetaDataList = codeGenerateService.parseOutMethodMetaData(file, basicConfig);
         // List<DTOMetaData> methodParamList = methodMetaDataList.stream().map(MethodMetaData::getMethodParam).collect(Collectors.toList());
+        // 需要排除 PageResponse baseResponse
         // List<DTOMetaData> methodReturnList = methodMetaDataList.stream().map(MethodMetaData::getMethodReturn).collect(Collectors.toList());
 
         // 获取api类元数据
