@@ -66,7 +66,7 @@ public class CodeGenerateController {
             FreeMarkerUtils.processTemplateInfoFile(Constants.Template.REQUEST, dtoDataModel, dtoMetaData.getDirPath(), dtoMetaData.getFilePath());
         });
 
-        // Response FTO元数据，
+        // Response DTO元数据，
         methodMetaDataList.stream()
                 .filter(methodMetaData -> {
                     // 需要排除 PageResponse baseResponse
