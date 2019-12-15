@@ -28,7 +28,9 @@ public interface CodeGenerateService {
      * @param basicConfig        基本配置
      * @param methodMetaDataList 方法元数据集合
      * @param classConfig        类配置
+     * @param implementsInterface 需要实现的接口
      * @return
      */
-    ClassMetaData getClassMetaData(BasicConfig basicConfig, List<MethodMetaData> methodMetaDataList, Constants.ClassConfig classConfig);
+    ClassMetaData getClassMetaData(BasicConfig basicConfig, List<MethodMetaData> methodMetaDataList,
+                                   Constants.ClassConfig classConfig, ClassMetaData implementsInterface);
 }

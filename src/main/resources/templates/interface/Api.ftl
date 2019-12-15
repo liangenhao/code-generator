@@ -1,9 +1,11 @@
 package ${classMetaData.packageName};
 
+<#if classMetaData.methodMetaDataList?size gt 0>
 <#list classMetaData.methodMetaDataList as methodMetaData>
-import ${methodMetaData.methodParam.packageName}.${methodMetaData.methodParam.className}
-import ${methodMetaData.methodReturn.packageName}.${methodMetaData.methodReturn.className}
+import ${methodMetaData.methodParam.packageName}.${methodMetaData.methodParam.className};
+import ${methodMetaData.methodReturn.packageName}.${methodMetaData.methodReturn.className};
 </#list>
+</#if>
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "${basicConfig.interfacePrefix}")
 public interface ${classMetaData.className} {
 
+<#if classMetaData.methodMetaDataList?size gt 0>
 <#list classMetaData.methodMetaDataList as methodMetaData>
     @ApiOperation(value = "${methodMetaData.methodDesc}", notes = "${methodMetaData.methodDesc}", response = ${methodMetaData.methodReturn.className}.class)
     @ApiResponses(value = {@ApiResponse(code = 0, message = "成功", response = ${methodMetaData.methodReturn.className}.class)})
@@ -32,5 +35,5 @@ public interface ${classMetaData.className} {
     ${methodMetaData.methodReturn.className} ${methodMetaData.methodName}(${methodMetaData.methodParam.className} req) throws Exception;
 
 </#list>
-
+</#if>
 }

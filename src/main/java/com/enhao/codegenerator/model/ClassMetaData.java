@@ -27,4 +27,9 @@ public class ClassMetaData extends BasicMetaData {
      * 方法
      */
     private List<MethodMetaData> methodMetaDataList;
+
+    /**
+     * 需要实现的接口
+     */
+    private ClassMetaData implementsInterface;
 }

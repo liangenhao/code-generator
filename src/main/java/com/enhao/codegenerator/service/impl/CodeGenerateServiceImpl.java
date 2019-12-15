@@ -57,7 +57,8 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
     }
 
     @Override
-    public ClassMetaData getClassMetaData(BasicConfig basicConfig, List<MethodMetaData> methodMetaDataList, Constants.ClassConfig classConfig) {
+    public ClassMetaData getClassMetaData(BasicConfig basicConfig, List<MethodMetaData> methodMetaDataList,
+                                          Constants.ClassConfig classConfig, ClassMetaData implementsInterface) {
         // 包名
         String packageName = getPackageName(basicConfig, classConfig);
         // 类名
@@ -71,6 +72,7 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         classMetadata.setPackageName(packageName);
         classMetadata.setClassName(className);
         classMetadata.setMethodMetaDataList(methodMetaDataList);
+        classMetadata.setImplementsInterface(implementsInterface);
         classMetadata.setDirPath(classDirPath);
         classMetadata.setFilePath(classFilePath);
 
@@ -226,8 +228,16 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         // 剩余的字母
         String otherWord = namePrefix.substring(1);
 
+
+        // 接口类前缀
+        String interfacePrefix = "";
+        if (classConfig.interfaceClass) {
+            // 如果是接口类，拼接前缀
+            interfacePrefix = "I";
+        }
+
         // 拼接，并加上后缀
-        return firstWord + otherWord + classConfig.classSuffix;
+        return interfacePrefix + firstWord + otherWord + classConfig.classSuffix;
     }
 
     /**

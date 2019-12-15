@@ -69,6 +69,11 @@ public class Constants {
      */
     public interface Template {
         String API = "interface/Api.ftl";
+        String CONTROLLER = "interface/Controller.ftl";
+        String SV = "interface/SV.ftl";
+        String SV_IMPL = "interface/SVImpl.ftl";
+        String REQUEST = "interface/Request.ftl";
+        String RESPONSE = "interface/Response.ftl";
     }
 
     public interface Format {
@@ -78,26 +83,28 @@ public class Constants {
 
 
     /**
-     * Request/Response类配置
+     * 类配置
      */
     public enum ClassConfig {
-        REQ_SUFFIX("Req", "common.dto.request." + Placeholder.$INTERFACE_PREFIX, "Request类"),
-        RESP_SUFFIX("Resp", "common.dto.response" + Placeholder.$INTERFACE_PREFIX, "Response类"),
-        API_SUFFIX("Api", "api", "Api类"),
-        CONTROLLER_SUFFIX("Controller", Placeholder.$PROJECT_PREFIX + ".controller", "Controller类"),
-        SV_SUFFIX("SV", Placeholder.$PROJECT_PREFIX + ".service.interfaces", "SV类"),
-        SV_IMPL_SUFFIX("SVImpl", Placeholder.$PROJECT_PREFIX + ".service.impl", "SVImpl类"),
-        PAGE_RESPONSE("PageResponse", "common.dto.model", "PageResponse类"),
-        BASE_RESPONSE("BaseResponse", "common.dto.model", "BaseResponse类");
+        REQ_SUFFIX("Req", "common.dto.request." + Placeholder.$INTERFACE_PREFIX, false, "Request类"),
+        RESP_SUFFIX("Resp", "common.dto.response." + Placeholder.$INTERFACE_PREFIX, false, "Response类"),
+        API_SUFFIX("Api", "api", true, "Api类"),
+        CONTROLLER_SUFFIX("Controller", Placeholder.$PROJECT_PREFIX + ".controller", false, "Controller类"),
+        SV_SUFFIX("SV", Placeholder.$PROJECT_PREFIX + ".service.interfaces", true, "SV类"),
+        SV_IMPL_SUFFIX("SVImpl", Placeholder.$PROJECT_PREFIX + ".service.impl", false, "SVImpl类"),
+        PAGE_RESPONSE("PageResponse", "common.dto.model", false, "PageResponse类"),
+        BASE_RESPONSE("BaseResponse", "common.dto.model", false, "BaseResponse类");
 
 
         public String classSuffix; // 类名后缀
         public String packageSuffix; // 包名后缀
+        public boolean interfaceClass; // 是否是接口类：true 接口类；false 非接口类
         public String desc; // 描述
 
-        ClassConfig(String classSuffix, String packageSuffix, String desc) {
+        ClassConfig(String classSuffix, String packageSuffix, boolean interfaceClass, String desc) {
             this.classSuffix = classSuffix;
             this.packageSuffix = packageSuffix;
+            this.interfaceClass = interfaceClass;
             this.desc = desc;
         }
     }
