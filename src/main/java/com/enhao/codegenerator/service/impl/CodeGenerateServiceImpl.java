@@ -9,6 +9,7 @@ import com.enhao.codegenerator.service.CodeGenerateService;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
             if (null == row) {
                 continue;
             }
-            MethodMetaData methodMetaData = getMethodMetaData(row, basicConfig);
+            MethodMetaData methodMetaData = getMethodMetaData(row, basicConfig, rowCount);
 
             methodMetadataList.add(methodMetaData);
 
@@ -86,7 +87,8 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
      * @param basicConfig 基本配置
      * @return 方法元数据
      */
-    private MethodMetaData getMethodMetaData(Row row, BasicConfig basicConfig) {
+    private MethodMetaData getMethodMetaData(Row row, BasicConfig basicConfig, int rowCount) {
+        int count = rowCount + 1;
         Cell methodNameCell = row.getCell(0);
         Cell methodDescCell = row.getCell(1);
         Cell paginateCell = row.getCell(2);
@@ -94,8 +96,14 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
 
         // 方法名
         String methodName = methodNameCell.getStringCellValue();
+        if (!StringUtils.hasText(methodName)) {
+            throw new RuntimeException(String.format("第%s行方法名为空", count));
+        }
         // 方法描述
         String methodDesc = methodDescCell.getStringCellValue();
+        if (!StringUtils.hasText(methodDesc)) {
+            throw new RuntimeException(String.format("第%s行方法描述为空", count));
+        }
         // 是否分页
         boolean paginate = paginateCell.getBooleanCellValue();
         // 是否需要返回数据
