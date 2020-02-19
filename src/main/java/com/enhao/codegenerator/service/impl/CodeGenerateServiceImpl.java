@@ -218,7 +218,7 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
      */
     private String getClassDirPath(String filePathPrefix, String packageName) {
         // 将包名中的 . 替换为 文件分隔符
-        String packageNamePath = packageName.replaceAll("\\.", File.separator);
+        String packageNamePath = packageName.replace(".", File.separator);
 
         return filePathPrefix + File.separator + Constants.CodePath.SRC_MAIN_JAVA + File.separator + packageNamePath;
     }
